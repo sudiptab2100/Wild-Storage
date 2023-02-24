@@ -4,7 +4,7 @@
 
 #### Create Virtual Environment
 
-```python
+```console
 python -m venv env
 ```
 
