@@ -1,6 +1,5 @@
 import numpy as np
 from PIL import Image as im
-from byted_file import *
 
 class Pixelize:
     def __init__(self, height=720, width=1280):
