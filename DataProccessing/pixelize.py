@@ -15,4 +15,5 @@ class Pixelize:
 
     def pixelToByte(self, target):
         pix = im.open(target)
-        return np.array(pix)
+        array = np.array(pix).flatten().tolist()
+        return array
