@@ -13,12 +13,8 @@ class ZipModule:
             for file in files:
                 fn = os.path.join(base, file)
                 zipobj.write(fn, fn[rootlen: ])
-        
-        sys.exit()
     
     def unzip(self, fname, target_dir, op_dir):
         with zipfile.ZipFile(target_dir, 'r') as zip:
             zip.extractall(op_dir + fname + '/')
-        
-        sys.exit()
 
