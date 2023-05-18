@@ -8,24 +8,24 @@ class FrameGenerator:
         self.pixel_count = height * width
         self.p = Pixelize(height=self.height, width=self.width)
 
-    def __byteSlabs(self, bytedata, n):
+    def __bitSlabs(self, bitdata, n):
         for i in range(0, n, self.pixel_count):
-            yield bytedata[i: i + self.pixel_count]
+            yield bitdata[i: i + self.pixel_count]
     
-    def __padSize(self, bytedata, n):
+    def __padSize(self, bitdata, n):
         ext = n % self.pixel_count
 
         if ext != 0: return (self.pixel_count - ext)
         return 0
 
-    def storeFrames(self, bytedata, target_dir):
+    def storeFrames(self, bitdata, target_dir):
         i = 0
-        noOfBytes = len(bytedata)
-        pads = self.__padSize(bytedata, noOfBytes)
-        bytedata.extend([0] * pads)
-        slabs = self.__byteSlabs(bytedata, noOfBytes + pads)
+        noOfBytes = len(bitdata)
+        pads = self.__padSize(bitdata, noOfBytes)
+        bitdata += "0" * pads
+        slabs = self.__bitSlabs(bitdata, noOfBytes + pads)
         for slab in slabs:
-            self.p.byteToPixel(slab, f"{target_dir}{i}.png")
+            self.p.bitToPixel(slab, f"{target_dir}{i}.png")
             i += 1
         
         metadata = dict()
@@ -39,14 +39,14 @@ class FrameGenerator:
         with open(f"{target_dir}metadata.json", "w") as outfile:
             json.dump(metadata, outfile)
 
-    def framesToByte(self, target_dir):
+    def framesToBits(self, target_dir):
         metadata = ''
         with open(f"{target_dir}metadata.json", "r") as f:
             metadata = json.load(f)
         
         n = metadata['frames']
-        bytedata = []
+        bitdata = ""
         for i in range(n):
-            bytedata += self.p.pixelToByte(f"{target_dir}{i}.png")
+            bitdata += self.p.pixelToBit(f"{target_dir}{i}.png")
 
-        return bytedata[: metadata['bytes']]
+        return bitdata[: metadata['bytes']]

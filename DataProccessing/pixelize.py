@@ -6,14 +6,17 @@ class Pixelize:
         self.height = height
         self.width = width
         self.pixel_count = height * width
-
-    def byteToPixel(self, bytedata, target):
-        array = np.array(bytedata).astype('uint8')
+    
+    def bitToPixel(self, fbits, target):
+        fbytes = [255 * int(b) for b in fbits]
+        array = np.array(fbytes).astype('uint8')
         reshaped_bytes = np.reshape(array, (self.height, self.width))
         data = im.fromarray(reshaped_bytes)
         data.save(target)
-
-    def pixelToByte(self, target):
+    
+    def pixelToBit(self, target):
         pix = im.open(target)
         array = np.array(pix).flatten().tolist()
-        return array
+        bits = ""
+        for a in array: bits += str(int(a) // 255)
+        return bits
