@@ -17,14 +17,14 @@ class FrameVideo:
     def framesToVideo(self, target_dir, dest):
         metadata = self.__getMetadata(target_dir)
         n = metadata['frames']
-        out = cv2.VideoWriter(dest + 'op.avi', cv2.VideoWriter_fourcc(*'MPNG'), 15, (metadata['width'], metadata['height']), 0)
+        out = cv2.VideoWriter(dest + 'op.mp4', cv2.VideoWriter_fourcc(*'MPNG'), 10, (metadata['width'], metadata['height']), 0)
         for frame in self.__frames(target_dir, n):
             out.write(frame)
         out.release()
 
     def extractFrames(self, target, dest):
         metadata = self.__getMetadata(target)
-        vidObj = cv2.VideoCapture(target + 'op.avi')
+        vidObj = cv2.VideoCapture(target + 'op.mp4')
     
         count = 0
         success = True
