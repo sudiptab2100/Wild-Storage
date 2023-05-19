@@ -18,5 +18,5 @@ class Pixelize:
         pix = im.open(target)
         array = np.array(pix).flatten().tolist()
         bits = ""
-        for a in array: bits += str(int(a) // 255)
+        for a in array: bits += str(int(int(a) / 255 > 0.5))
         return bits
