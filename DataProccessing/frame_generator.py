@@ -1,22 +1,71 @@
 from pixelize import Pixelize
 import json
+from collections import Counter
 
 class FrameGenerator:
-    def __init__(self, height=720, width=1280):
+    def __init__(self, height=720, width=1280, exp=1):
         self.height = height
         self.width = width
         self.pixel_count = height * width
         self.p = Pixelize(height=self.height, width=self.width)
+        self.exp = exp
 
     def __bitSlabs(self, bitdata, n):
-        for i in range(0, n, self.pixel_count):
-            yield bitdata[i: i + self.pixel_count]
+        chunk_size = self.pixel_count // (self.exp ** 2)
+        for i in range(0, n, chunk_size):
+            yield bitdata[i: i + chunk_size]
     
     def __padSize(self, bitdata, n):
-        ext = n % self.pixel_count
+        chunk_size = self.pixel_count // (self.exp ** 2)
+        ext = n % chunk_size
 
-        if ext != 0: return (self.pixel_count - ext)
+        if ext != 0: return (chunk_size - ext)
         return 0
+
+    def __expandSlab(self, slab):
+        op1 = ""
+        # horizontal expansion
+        for s in slab:
+            op1 += s * self.exp
+        
+        n = len(op1)
+        op2 = ""
+        # vertical expansion
+        for i in range(0, n, self.width):
+            op2 += op1[i: i + self.width] * self.exp
+        
+        return op2
+    
+    def __max_char(self, string):
+        char_counts = Counter(string)
+        max_count = max(char_counts.values())
+        return 1 if char_counts['1'] == max_count else 0
+    
+    def __compressSlab(self, slab):
+        op = ""
+        vchunk_size = self.exp * self.width
+        for i in range(0, self.pixel_count, vchunk_size):
+            vslab = slab[i: i + vchunk_size]
+            for j in range(0, self.width, self.exp):
+                t_op = ""
+                for k in range(self.exp):
+                    for l in range(self.exp):
+                        index = j + k * self.width + l
+                        t_op += vslab[index]
+                op += str(self.__max_char(t_op))
+        return op
+    
+    # For testing expansion and compression
+    # def test(self, bitdata):
+    #     e = self.__expandSlab(bitdata)
+    #     e = e[: 3] + '1' + e[4:]
+    #     c = self.__compressSlab(e)
+    #     print()
+    #     for i in range(0, len(e), self.width):
+    #         print(*e[i: i + self.width])
+    #     print()
+    #     for i in range(0, len(c), self.width // self.exp):
+    #         print(*c[i: i + self.width // self.exp])
 
     def storeFrames(self, bitdata, target_dir):
         i = 0
@@ -25,7 +74,8 @@ class FrameGenerator:
         bitdata += "0" * pads
         slabs = self.__bitSlabs(bitdata, noOfBytes + pads)
         for slab in slabs:
-            self.p.bitToPixel(slab, f"{target_dir}{i}.png")
+            ext_slab = self.__expandSlab(slab)
+            self.p.bitToPixel(ext_slab, f"{target_dir}{i}.png")
             i += 1
         
         metadata = dict()
@@ -47,6 +97,6 @@ class FrameGenerator:
         n = metadata['frames']
         bitdata = ""
         for i in range(n):
-            bitdata += self.p.pixelToBit(f"{target_dir}{i}.png")
+            bitdata += self.__compressSlab(self.p.pixelToBit(f"{target_dir}{i}.png"))
 
         return bitdata[: metadata['bytes']]
