@@ -73,9 +73,11 @@ class FrameGenerator:
         pads = self.__padSize(bitdata, noOfBytes)
         bitdata += "0" * pads
         slabs = self.__bitSlabs(bitdata, noOfBytes + pads)
+        img_arr = []
         for slab in slabs:
             ext_slab = self.__expandSlab(slab)
-            self.p.bitToPixel(ext_slab, f"{target_dir}{i}.png")
+            pix = self.p.bitToPixel(ext_slab)
+            img_arr.append(pix)
             i += 1
         
         metadata = dict()
@@ -88,15 +90,15 @@ class FrameGenerator:
 
         with open(f"{target_dir}metadata.json", "w") as outfile:
             json.dump(metadata, outfile)
+        
+        return img_arr
 
-    def framesToBits(self, target_dir):
+    def framesToBits(self, target_dir, img_arr):
         metadata = ''
         with open(f"{target_dir}metadata.json", "r") as f:
             metadata = json.load(f)
         
         n = metadata['frames']
-        bitdata = ""
-        for i in range(n):
-            bitdata += self.__compressSlab(self.p.pixelToBit(f"{target_dir}{i}.png"))
+        bitdata = ''.join([self.__compressSlab(self.p.pixelToBit(img_arr[i])) for i in range(n)])
 
         return bitdata[: metadata['bytes']]
