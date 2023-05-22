@@ -16,5 +16,5 @@ class Pixelize:
     
     def pixelToBit(self, pix):
         array = np.array(pix).flatten().tolist()
-        bits = ''.join([str(int(int(a) / 255 > 0.5)) for a in array])
+        bits = c_pixelToBit(array)
         return bits
