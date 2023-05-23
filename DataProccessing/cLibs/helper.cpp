@@ -2,7 +2,7 @@
 
 using namespace std;
 
-string ppixelToBit(const int* array, const size_t size) {
+string pixelToBit(const int* array, const size_t size) {
     string bits;
 
     for (int i = 0; i < size; ++i) {
@@ -14,7 +14,7 @@ string ppixelToBit(const int* array, const size_t size) {
 
 extern "C" {
     const char* c_pixelToBit(const int* array, const size_t size) { 
-        string bits = ppixelToBit(array, size); 
+        string bits = pixelToBit(array, size); 
         return bits.c_str();
     }
 }

@@ -1,6 +1,6 @@
 from ctypes import *
 
-c_lib = cdll.LoadLibrary('/Users/sudiptabasak/Desktop/Wild-Storage/DataProccessing/cLibs/c_lib.so')
+c_lib = cdll.LoadLibrary('./DataProccessing/cLibs/c_lib.so')
 
 def c_pixelToBit(array):
     size = len(array)
