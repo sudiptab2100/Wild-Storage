@@ -1,6 +1,7 @@
 from pixelize import Pixelize
 import json
 from collections import Counter
+from c_bind import c_expandSlab
 
 class FrameGenerator:
     def __init__(self, height=720, width=1280, exp=1):
@@ -23,18 +24,7 @@ class FrameGenerator:
         return 0
 
     def __expandSlab(self, slab):
-        op1 = ""
-        # horizontal expansion
-        for s in slab:
-            op1 += s * self.exp
-        
-        n = len(op1)
-        op2 = ""
-        # vertical expansion
-        for i in range(0, n, self.width):
-            op2 += op1[i: i + self.width] * self.exp
-        
-        return op2
+        return c_expandSlab(slab, self.exp, self.width)
     
     def __max_char(self, string):
         char_counts = Counter(string)
