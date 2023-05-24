@@ -2,14 +2,11 @@ from ctypes import *
 
 c_lib = cdll.LoadLibrary('./DataProccessing/cLibs/c_lib.so')
 
-def c_pixelToBit(array):
-    size = len(array)
-    carray = (c_int * size)(*array)
-
-    c_lib.c_pixelToBit.argtypes = [POINTER(c_int), c_size_t]
+def c_pixelToBit(pix):
+    height, width = pix.shape
+    data_ptr = pix.ctypes.data_as(POINTER(c_uint8))
     c_lib.c_pixelToBit.restype = c_char_p
-
-    res = c_lib.c_pixelToBit(carray, size)
+    res = c_lib.c_pixelToBit(data_ptr, height, width)
     return res.decode('utf-8')
 
 def c_expandSlab(slab, exp, width):

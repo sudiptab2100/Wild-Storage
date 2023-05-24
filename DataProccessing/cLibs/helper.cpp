@@ -1,15 +1,18 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <cstdint>
 #include <unordered_map>
 
 using namespace std;
 
-string pixelToBit(const int* array, const size_t size) {
+string pixelToBit(const uint8_t* pix, const size_t height, const size_t width) {
     string bits;
 
-    for (int i = 0; i < size; ++i) {
-        bits += to_string(static_cast<int>(round(array[i] / 255.0)) > 0.5 ? 1 : 0);
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; j++) {
+            bits += to_string(static_cast<int>(round(pix[i * width + j] / 255.0)) > 0.5 ? 1 : 0);
+        }
     }
 
     return bits;
@@ -76,22 +79,21 @@ string compressSlab(const string& slab, int exp, int width, int pixel_count) {
     return op;
 }
 
+const char* toCString(string s) {
+    char* c_string = new char[s.size() + 1];
+    strcpy(c_string, s.c_str());
+    return c_string;
+}
+
 extern "C" {
-    const char* c_pixelToBit(const int* array, const size_t size) { 
-        string bits = pixelToBit(array, size); 
-        return bits.c_str();
+    const char* c_pixelToBit(const uint8_t* array, const size_t height, const size_t width) {
+        return toCString(pixelToBit(array, height, width));
     }
     const char* c_expandSlab(const char* slab, int exp, int width) {
-        string result = expandSlab(slab, exp, width);
-        char* c_string = new char[result.size() + 1];
-        strcpy(c_string, result.c_str());
-        return c_string;
+        return toCString(expandSlab(slab, exp, width));
     }
     const char* c_compressSlab(const char* slab, int exp, int width, int pixel_count) {
-        string result = compressSlab(slab, exp, width, pixel_count);
-        char* c_string = new char[result.size() + 1];
-        strcpy(c_string, result.c_str());
-        return c_string;
+        return toCString(compressSlab(slab, exp, width, pixel_count));
     }
 }
 
