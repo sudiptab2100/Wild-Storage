@@ -1,7 +1,7 @@
 from pixelize import Pixelize
 import json
 from collections import Counter
-from c_bind import c_expandSlab
+from c_bind import c_expandSlab, c_compressSlab
 
 class FrameGenerator:
     def __init__(self, height=720, width=1280, exp=1):
@@ -26,24 +26,8 @@ class FrameGenerator:
     def __expandSlab(self, slab):
         return c_expandSlab(slab, self.exp, self.width)
     
-    def __max_char(self, string):
-        char_counts = Counter(string)
-        max_count = max(char_counts.values())
-        return 1 if char_counts['1'] == max_count else 0
-    
     def __compressSlab(self, slab):
-        op = ""
-        vchunk_size = self.exp * self.width
-        for i in range(0, self.pixel_count, vchunk_size):
-            vslab = slab[i: i + vchunk_size]
-            for j in range(0, self.width, self.exp):
-                t_op = ""
-                for k in range(self.exp):
-                    for l in range(self.exp):
-                        index = j + k * self.width + l
-                        t_op += vslab[index]
-                op += str(self.__max_char(t_op))
-        return op
+        return c_compressSlab(slab, self.exp, self.width, self.pixel_count)
     
     # For testing expansion and compression
     # def test(self, bitdata):

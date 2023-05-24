@@ -19,3 +19,11 @@ def c_expandSlab(slab, exp, width):
 
 	res = c_lib.c_expandSlab(cslab, exp, width)
 	return res.decode('utf-8')
+
+def c_compressSlab(slab, exp, width, pixel_count):
+    cslab = c_char_p(slab.encode('utf-8'))
+    c_lib.c_compressSlab.argtypes = [c_char_p, c_int, c_int, c_int]
+    c_lib.c_compressSlab.restype = c_char_p
+
+    res = c_lib.c_compressSlab(cslab, exp, width, pixel_count)
+    return res.decode('utf-8')
