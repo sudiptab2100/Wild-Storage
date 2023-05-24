@@ -5,7 +5,7 @@
 #### Create Virtual Environment
 
 ```console
-python -m venv env
+python3 -m venv env
 ```
 
 #### Activate Virtual Environment
