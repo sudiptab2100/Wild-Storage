@@ -17,7 +17,7 @@ class FrameVideo:
     def framesToVideo(self, target_dir, img_arr):
         metadata = self.__getMetadata(target_dir)
         n = metadata['frames']
-        out = cv2.VideoWriter(target_dir + 'op.mp4', cv2.VideoWriter_fourcc(*'MPNG'), 10, (metadata['width'], metadata['height']), 0)
+        out = cv2.VideoWriter(target_dir + 'op.mp4', cv2.VideoWriter_fourcc(*'MPNG'), 24, (metadata['width'], metadata['height']), 0)
         for frame in img_arr:
             out.write(frame)
         out.release()
