@@ -1,6 +1,7 @@
 from ctypes import *
+import os.path
 
-c_lib = cdll.LoadLibrary('./DataProccessing/cLibs/c_lib.so')
+c_lib = cdll.LoadLibrary(os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "cLibs/c_lib.so")
 
 def c_pixelToBit(pix):
     height, width = pix.shape
