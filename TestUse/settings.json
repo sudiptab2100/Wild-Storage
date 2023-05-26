@@ -1,0 +1,8 @@
+{
+    "height": 720,
+    "width": 1280,
+    "expansion_factor": 4,
+    "op_generated": "TestUse/op/generated/",
+    "op_retrieved": "TestUse/op/retrieved/",
+    "zip_name": "op"
+}
