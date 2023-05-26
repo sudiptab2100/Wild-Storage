@@ -39,6 +39,10 @@ g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_li
 
 <img src="https://ipfs.io/ipfs/QmVqEF5QpY6ywYRw9XUHJCv13VtLJ42e3JVH8XYr9adWRm">
 
+## Expansion And Compression
+
+<img src="https://ipfs.io/ipfs/Qma8CRjSV7Azkp3uMfda1aWDNHGNQgy1haC6fcuuWHMJ8Y">
+
 ## Challenges
 
 Wild-Storage was a complete Python Implementation. Beign a very slow interpreted language it was taking too much time to process files. Later I moved some heavy task codebase to C++ and wrapped those in Python using [ctypes](https://docs.python.org/3/library/ctypes.html). This helped to process the files ~3x faster.
