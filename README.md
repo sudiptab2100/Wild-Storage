@@ -1,6 +1,6 @@
 # Wild-Storage
 
-Wild-Storage lets you use YouTube as a Infinite Cloud Storage. It embeds any files(Images, Videos, Documents, etc) into a video. The video can be uploaded to YouTube and the file can be retrieved from the video. A exapansion & compression technique is used to defeat YouTube's compression algorithm. The file can be retrieved from the video without any loss of data.
+Wild-Storage lets you use YouTube as a Infinite Cloud Storage. It embeds any files(Images, Videos, Documents, etc) into a video. The video can be uploaded to YouTube and the file can be retrieved from the video. A expansion & compression technique is used to defeat YouTube's compression algorithm. The file can be retrieved from the video without any loss of data.
 
 ## Demo Video ([YouTube Link](https://youtu.be/NbeWh011qjs))
 
