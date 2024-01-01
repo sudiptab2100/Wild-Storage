@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image as im
-from c_bind import c_pixelToBit
+from DataProccessing.c_bind import c_pixelToBit
 
 class Pixelize:
     def __init__(self, height=720, width=1280):

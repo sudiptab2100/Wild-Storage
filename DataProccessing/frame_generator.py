@@ -1,7 +1,7 @@
-from pixelize import Pixelize
+from DataProccessing.pixelize import Pixelize
 import json
 from collections import Counter
-from c_bind import c_expandSlab, c_compressSlab
+from DataProccessing.c_bind import c_expandSlab, c_compressSlab
 
 class FrameGenerator:
     def __init__(self, height=720, width=1280, exp=1):
