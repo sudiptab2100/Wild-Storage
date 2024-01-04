@@ -6,9 +6,19 @@ import time
 import shutil
 import json
 from PyInquirer import prompt
+import os
 
 
-settings = json.load(open('settings.json'))
+def create_dir(settings):
+    if not os.path.exists(settings['data_dir']):
+        os.mkdir(settings['data_dir'])
+        os.mkdir(settings['ip_files'])
+        os.mkdir(settings['op_generated'])
+        os.mkdir(settings['op_retrieved'])
+
+def delete_dir(settings):
+    if os.path.exists(settings['data_dir']):
+        shutil.rmtree(settings['data_dir'])
 
 questions = [
     {
@@ -23,8 +33,27 @@ questions = [
         ]
     }
 ]
+cleaning_confirmation = [
+    {
+        'type': 'confirm',
+        'name': 'confirm',
+        'message': 'Do you want to continue cleaning?'
+    }
+]
+
 while True:
+    settings = json.load(open('settings.json'))
     answer = prompt(questions)['operation']
-    print(answer)
     if answer == 'Exit':
         break
+    elif answer == 'Clean':
+        confirmation = prompt(cleaning_confirmation)['confirm']
+        if confirmation:
+            print('Cleaning...')
+            delete_dir(settings)
+            create_dir(settings)
+            print('Done!')
+    elif answer == 'Encode file to video':
+        pass
+    elif answer == 'Decode video to file':
+        pass

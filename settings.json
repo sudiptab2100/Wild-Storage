@@ -1,0 +1,11 @@
+{
+    "height": 720,
+    "width": 1280,
+    "expansion_factor": 4,
+    "data_dir": "data/",
+    "ip_files": "data/input/",
+    "op_generated": "data/generated/",
+    "op_retrieved": "data/retrieved/",
+    "zip_name": "op",
+    "clean": true
+}
