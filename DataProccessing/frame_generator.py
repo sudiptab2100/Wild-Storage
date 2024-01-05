@@ -63,7 +63,7 @@ class FrameGenerator:
         metadata['pixel_count'] = self.pixel_count
 
         with open(f"{target_dir}metadata.json", "w") as outfile:
-            json.dump(metadata, outfile)
+            json.dump(metadata, outfile, indent=4)
         
         return img_arr
 
