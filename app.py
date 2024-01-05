@@ -7,6 +7,8 @@ import shutil
 import json
 from PyInquirer import prompt
 import os
+from pytube import YouTube
+from pytube.cli import on_progress
 
 
 def create_dir(settings):
@@ -87,6 +89,23 @@ def decode_from_video(settings):
     toc = time.perf_counter()
     print(f"unzip done: {toc - tic:0.4f} seconds")
 
+def download_and_decode_video(url, settings):
+    yt_obj = YouTube(url, on_progress_callback=on_progress)
+    yt_stream = yt_obj.streams.get_highest_resolution()
+    yt_desc = yt_obj.description
+    try:
+        print('Downloading...')
+        tic = time.perf_counter()
+        yt_stream.download(filename='op.mp4', output_path=settings['download_dir'])
+        toc = time.perf_counter()
+        print()
+        print(f"downloading done: {toc - tic:0.4f} seconds")
+        with open(f'{settings["download_dir"]}metadata.json', 'w') as f:
+            f.write(yt_desc)
+        decode_from_video(settings)
+    except:
+        print('An error has occurred')
+
 questions = [
     {
         'type': 'rawlist',
@@ -123,4 +142,5 @@ while True:
     elif answer == 'Encode file to video':
         encode_to_video(settings)
     elif answer == 'Decode video to file':
-        decode_from_video(settings)
+        yt_url = input('Enter the YouTube video URL: ')
+        download_and_decode_video(yt_url, settings)
