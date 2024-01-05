@@ -6,6 +6,7 @@
     "ip_files": "data/input/",
     "op_generated": "data/generated/",
     "op_retrieved": "data/retrieved/",
+    "download_dir": "data/download/",
     "zip_name": "op",
     "clean": true
 }

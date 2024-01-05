@@ -15,6 +15,7 @@ def create_dir(settings):
         os.mkdir(settings['ip_files'])
         os.mkdir(settings['op_generated'])
         os.mkdir(settings['op_retrieved'])
+        os.mkdir(settings['download_dir'])
 
 def delete_dir(settings):
     if os.path.exists(settings['data_dir']):
@@ -54,7 +55,37 @@ def encode_to_video(settings):
     print(f"frames to video done: {toc - tic:0.4f} seconds")
 
 def decode_from_video(settings):
-    pass
+    download_dir = settings['download_dir']
+    op_dir = settings['op_retrieved']
+    height = settings['height']
+    width = settings['width']
+    exp = settings['expansion_factor']
+    OPz = settings['zip_name']
+    
+    z = ZipModule()
+    b = Bitify()
+    f = FrameGenerator(height, width, exp)
+    v = FrameVideo()
+    
+    tic = time.perf_counter()
+    img_arr = v.extractFrames(download_dir)
+    toc = time.perf_counter()
+    print(f"video to frames done: {toc - tic:0.4f} seconds")
+    
+    tic = time.perf_counter()
+    fbits = f.framesToBits(download_dir, img_arr)
+    toc = time.perf_counter()
+    print(f"frames to bits done: {toc - tic:0.4f} seconds")
+    
+    tic = time.perf_counter()
+    b.bitsToFile(fbits, f'{op_dir}{OPz}.zip')
+    toc = time.perf_counter()
+    print(f"bit to file done: {toc - tic:0.4f} seconds")
+    
+    tic = time.perf_counter()
+    z.unzip('Files', f'{op_dir}{OPz}.zip', op_dir)
+    toc = time.perf_counter()
+    print(f"unzip done: {toc - tic:0.4f} seconds")
 
 questions = [
     {
