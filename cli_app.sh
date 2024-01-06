@@ -8,6 +8,7 @@ if [ ! -d "$VENV_PATH" ] || [ ! -f "$VENV_PATH/bin/activate" ]; then
     echo "Initializing Virtual Python Environment..."
     python3 -m venv env
     source $VENV_PATH/bin/activate
+    g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_lib.so
     pip install -r requirements.txt || rm -rf "$VENV_PATH"
     echo "Setup Complete"
 else
