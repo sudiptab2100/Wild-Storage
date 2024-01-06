@@ -6,7 +6,7 @@ Wild-Storage lets you use YouTube as a Infinite Cloud Storage. It embeds any fil
 
 ![ezgif com-gif-maker](https://gateway.pinata.cloud/ipfs/Qmdo9ZW5uk6NDYWj8K6oNBABDNtBYZZagAxF9UmoxUQFwM)
 
-## Virtual Environment Set Up
+## Virtual Environment Set Up (... Not Required Now)
 
 ### Create Virtual Environment
 
@@ -26,15 +26,39 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Compile C++ Library & Generate Python Bindings
+## Compile C++ Library & Generate Python Bindings (... Not Required Now)
 
 ```console
 g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_lib.so
 ```
 
+## Wild-Storage CLI App
+
+### Make the script executable
+
+```console
+chmod +x cli_app.sh
+```
+
+### Run CLI App
+
+This will do all necessary setup and run the app
+
+```console
+./cli_app.sh
+```
+
+<img src="https://tomato-semantic-alligator-932.mypinata.cloud/ipfs/QmQdnLR9RmjFDLxb39VpqC8N5se9wbhPBRaLsd65uALVBD?_gl=1*1jcg77v*_ga*MjA2MjA3MzczMS4xNzA0NTQzNDQ0*_ga_5RMPXG14TE*MTcwNDU0MzQ0My4xLjEuMTcwNDU0MzU2NC42MC4wLjA.">
+
+## How to Use?
+
+Wait for the app to start.
+
+
 ## DataProcessing Working
 
 ### Embed File Into Video
+
 <img src="https://tomato-semantic-alligator-932.mypinata.cloud/ipfs/QmNx7xX1pn3ngduQU5n9GKC8NwfH7GRQXfGB4mFuxphtqa">
 
 ### Retrieve File From Video
