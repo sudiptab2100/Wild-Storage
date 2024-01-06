@@ -6,7 +6,7 @@ Wild-Storage lets you use YouTube as a Infinite Cloud Storage. It embeds any fil
 
 ![ezgif com-gif-maker](https://gateway.pinata.cloud/ipfs/Qmdo9ZW5uk6NDYWj8K6oNBABDNtBYZZagAxF9UmoxUQFwM)
 
-## Virtual Environment Set Up (... Not Required Now)
+## <del>Virtual Environment Set Up</del> ❌ (... Not Required Now)
 
 ### Create Virtual Environment
 
@@ -26,13 +26,13 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Compile C++ Library & Generate Python Bindings (... Not Required Now)
+## <del>Compile C++ Library & Generate Python Bindings</del> ❌ (... Not Required Now)
 
 ```console
 g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_lib.so
 ```
 
-## Wild-Storage CLI App
+## Wild-Storage CLI App ✅
 
 ### Make the script executable
 
@@ -50,7 +50,7 @@ This will do all necessary setup and run the app
 
 <img src="https://tomato-semantic-alligator-932.mypinata.cloud/ipfs/QmQdnLR9RmjFDLxb39VpqC8N5se9wbhPBRaLsd65uALVBD?_gl=1*1jcg77v*_ga*MjA2MjA3MzczMS4xNzA0NTQzNDQ0*_ga_5RMPXG14TE*MTcwNDU0MzQ0My4xLjEuMTcwNDU0MzU2NC42MC4wLjA.">
 
-## How to Use?
+## How to Use? ✅
 
 Wait for the app to start.
 
