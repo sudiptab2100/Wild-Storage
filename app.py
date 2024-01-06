@@ -5,11 +5,19 @@ from DataProccessing.video import FrameVideo
 import time
 import shutil
 import json
-from PyInquirer import prompt
+from PyInquirer import prompt, style_from_dict, Token
 import os
 from pytube import YouTube
 from pytube.cli import on_progress
+from colorama import init as colorama_init, Fore, Style
+from art import *
+import os
 
+
+ENCODE = ' Encode file to video'
+DECODE = ' Decode video to file'
+CLEAN = ' Clean'
+EXIT = ' Exit'
 
 def create_dir(settings):
     if not os.path.exists(settings['data_dir']):
@@ -106,16 +114,23 @@ def download_and_decode_video(url, settings):
     except:
         print('An error has occurred')
 
+qs_style = style_from_dict({
+    Token.Text: '#FF9D00',
+    Token.QuestionMark: '#FF9D00 bold',
+    Token.Selected: '#f7c602 bold italic underline',
+    Token.Pointer: '#FF9D00 bold reverse',
+    Token.Answer: '#f7c602 bold',
+})
 questions = [
     {
-        'type': 'rawlist',
+        'type': 'list',
         'name': 'operation',
         'message': 'Choose operation:',
         'choices': [
-            'Encode file to video',
-            'Decode video to file',
-            'Clean',
-            'Exit'
+            ENCODE,
+            DECODE,
+            CLEAN,
+            EXIT
         ]
     }
 ]
@@ -128,19 +143,31 @@ cleaning_confirmation = [
 ]
 
 while True:
+    # Clear console
+    os.system('cls' if os.name=='nt' else 'clear')
+    
+    # WILD-STORAGE Header
+    t_wild = text2art(f'WILD', font='4max')
+    t_storage = text2art(f'STORAGE', font='4max')
+    print(f"\n\n{Fore.YELLOW}{t_wild}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{t_storage}{Style.RESET_ALL}\n")
+    
     settings = json.load(open('settings.json'))
-    answer = prompt(questions)['operation']
-    if answer == 'Exit':
-        break
-    elif answer == 'Clean':
-        confirmation = prompt(cleaning_confirmation)['confirm']
-        if confirmation:
-            print('Cleaning...')
-            delete_dir(settings)
-            create_dir(settings)
-            print('Done!')
-    elif answer == 'Encode file to video':
-        encode_to_video(settings)
-    elif answer == 'Decode video to file':
-        yt_url = input('Enter the YouTube video URL: ')
-        download_and_decode_video(yt_url, settings)
+    try:
+        answer = prompt(questions, style=qs_style)['operation']
+        if answer == EXIT:
+            break
+        elif answer == CLEAN:
+            confirmation = prompt(cleaning_confirmation)['confirm']
+            if confirmation:
+                print('Cleaning...')
+                delete_dir(settings)
+                create_dir(settings)
+                print('Done!')
+        elif answer == ENCODE:
+            encode_to_video(settings)
+        elif answer == DECODE:
+            yt_url = input('Enter the YouTube video URL: ')
+            download_and_decode_video(yt_url, settings)
+    except:
+        pass 
