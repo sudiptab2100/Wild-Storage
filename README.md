@@ -54,6 +54,29 @@ This will do all necessary setup and run the app
 
 Wait for the app to start.
 
+### Create video from files
+
+- Copy all your files into ```\data\input``` directory
+- Select ```Encode file to video``` option on the app
+- Wait for the process to complete
+- <b>Generated video (```op.mp4```)</b> & <b>Metadata (```metadata.json```)</b> will be available in ```\data\generated``` directory
+- Upload the video to <b>YouTube</b> and copy-paste the contents of ```metadata.json``` in <b>description</b> of the video
+- Make sure the uploaded video is ```public``` / ```unlisted```
+
+### Retrieve files from video
+
+- Select ```Decode file from video``` option on the app
+- Enter the youtube video url (Make sure the uploaded video is ```public``` / ```unlisted```)
+- Wait for the process to complete
+- The files will be available in ```\data\retrieved``` directory
+
+### Cleaning up
+
+- Select ```Clean``` option on the app to clean data directory
+
+### Exit
+
+- Select ```Exit``` option on the app to exit
 
 ## DataProcessing Working
 
