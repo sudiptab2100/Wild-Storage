@@ -153,6 +153,7 @@ while True:
     print(f"{Fore.CYAN}{t_storage}{Style.RESET_ALL}\n")
     
     settings = json.load(open('settings.json'))
+    create_dir(settings)
     try:
         answer = prompt(questions, style=qs_style)['operation']
         if answer == EXIT:
