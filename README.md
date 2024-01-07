@@ -79,6 +79,50 @@ Wait for the app to start.
 
 - Select ```Exit``` option on the app to exit
 
+## Use Dockerized CLI App ✅ ✅
+
+### Build Docker Image
+
+```console
+docker build -t wild-storage .
+```
+
+### Run Docker Container
+
+```console
+docker run -it wild-storage
+```
+
+### Run Dockerized CLI App
+
+```console
+./cli_app
+```
+
+### Copy Input Files from Host to Container
+
+You can copy files from host to container using the following command. You can copy folders and files.
+
+```console
+docker cp <host_path> <container_id>:app/data/input
+```
+
+### Copy Output Files from Container to Host
+
+The video and metadata files can be copied from container to host using the following command.
+
+```console
+docker cp <container_id>:app/data/generated <host_path>
+```
+
+### Copy Retrieved Files from Container to Host
+
+The retrieved files can be copied from container to host using the following command.
+
+```console
+docker cp <container_id>:app/data/retrieved <host_path>
+```
+
 ## DataProcessing Working
 
 ### Embed File Into Video
