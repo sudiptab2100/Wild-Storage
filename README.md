@@ -81,6 +81,8 @@ Wait for the app to start.
 
 ## Use Dockerized CLI App ✅ ✅
 
+You just need to have ```Docker``` installed on your system.
+
 ### Build Docker Image
 
 ```console
