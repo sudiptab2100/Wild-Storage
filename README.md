@@ -37,15 +37,16 @@ g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_li
 ### Make the script executable
 
 ```console
-chmod +x cli_app.sh
+chmod +x cli_app
 ```
 
 ### Run CLI App
 
-This will do all necessary setup and run the app
+Make sure ```GCC``` compiler, ```Python 3```, ```pip```, Python ```venv``` is installed. \
+Now open terminal in the project directory and run the following command to complete the necessary setup and run the app.
 
 ```console
-./cli_app.sh
+./cli_app
 ```
 
 <img src="https://tomato-semantic-alligator-932.mypinata.cloud/ipfs/QmQdnLR9RmjFDLxb39VpqC8N5se9wbhPBRaLsd65uALVBD?_gl=1*1jcg77v*_ga*MjA2MjA3MzczMS4xNzA0NTQzNDQ0*_ga_5RMPXG14TE*MTcwNDU0MzQ0My4xLjEuMTcwNDU0MzU2NC42MC4wLjA.">
