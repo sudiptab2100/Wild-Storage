@@ -36,4 +36,4 @@ RUN ./setup
 ENV PYTHONUNBUFFERED=1
 
 # Run your Python application
-CMD ["./cli_app"]
+# CMD ["./cli_app"]
