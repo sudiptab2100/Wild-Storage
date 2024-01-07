@@ -1,0 +1,8 @@
+docker build -t wild-storage .
+docker run -it wild-storage
+docker ps
+docker ps -a
+docker start ${CONTAINER_ID}
+docker exec -it ${CONTAINER_ID} bash
+docker cp input_file_path ${CONTAINER_ID}:app/data/
+docker cp ${CONTAINER_ID}:app/data/generated output_file_path
