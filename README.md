@@ -6,7 +6,7 @@ Wild-Storage lets you use YouTube as a Infinite Cloud Storage. It embeds any fil
 
 ![ezgif com-gif-maker](https://gateway.pinata.cloud/ipfs/Qmdo9ZW5uk6NDYWj8K6oNBABDNtBYZZagAxF9UmoxUQFwM)
 
-## <del>Virtual Environment Set Up</del> ❌ (... Not Required Now)
+## ~~Virtual Environment Set Up~~ ❌ (... Not Required Now)
 
 ### Create Virtual Environment
 
@@ -26,7 +26,7 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## <del>Compile C++ Library & Generate Python Bindings</del> ❌ (... Not Required Now)
+## ~~Compile C++ Library & Generate Python Bindings~~ ❌ (... Not Required Now)
 
 ```console
 g++ -fPIC -shared DataProccessing/cLibs/helper.cpp -o DataProccessing/cLibs/c_lib.so
@@ -142,6 +142,11 @@ docker cp <container_id>:app/data/retrieved <host_path>
 ## Python Wrapped C++ Library
 
 Wild-Storage was a complete Python Implementation. Beign a very slow interpreted language it was taking too much time to process files. Later I moved some heavy task codebase to C++ and wrapped those in Python using [ctypes](https://docs.python.org/3/library/ctypes.html). This helped to process the files ~3x faster.
+
+## Features
+
+- Parallel Processing using multiple CPU cores is supported now.
+- C++ Library is used for heavy tasks to make the process faster.
 
 ## Credits
 
