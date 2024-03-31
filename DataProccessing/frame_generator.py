@@ -42,7 +42,7 @@ class FrameGenerator:
     #     for i in range(0, len(c), self.width // self.exp):
     #         print(*c[i: i + self.width // self.exp])
     
-    def runOnce(self, idx, slab):
+    def getPixOnce(self, idx, slab):
         ext_slab = self.__expandSlab(slab)
         pix = self.p.bitToPixel(ext_slab)
         return idx, pix
@@ -52,7 +52,7 @@ class FrameGenerator:
         pads = self.__padSize(bitdata, noOfBytes)
         bitdata += "0" * pads
         slabs = self.__bitSlabs(bitdata, noOfBytes + pads)
-        img_arr = Parallel(n_jobs=-1)(delayed(self.runOnce)(i, slab) for i, slab in enumerate(slabs))
+        img_arr = Parallel(n_jobs=-1)(delayed(self.getPixOnce)(i, slab) for i, slab in enumerate(slabs))
         img_arr = [x[1] for x in sorted(img_arr, key=lambda x: x[0])]
         
         metadata = dict()
@@ -67,13 +67,20 @@ class FrameGenerator:
             json.dump(metadata, outfile, indent=4)
         
         return img_arr
-
+    
+    def getBitsOnce(self, idx, pix):
+        ext_slab = self.p.pixelToBit(pix)
+        bit_slab = self.__compressSlab(ext_slab)
+        return idx, bit_slab
+    
     def framesToBits(self, target_dir, img_arr):
         metadata = ''
         with open(f"{target_dir}metadata.json", "r") as f:
             metadata = json.load(f)
         
         n = metadata['frames']
-        bitdata = ''.join([self.__compressSlab(self.p.pixelToBit(img_arr[i])) for i in range(n)])
+        bit_slabs = Parallel(n_jobs=-1)(delayed(self.getBitsOnce)(i, img_arr[i]) for i in range(n))
+        bit_slabs = [x[1] for x in sorted(bit_slabs, key=lambda x: x[0])]
+        bitdata = "".join(bit_slabs)
 
         return bitdata[: metadata['bytes']]
