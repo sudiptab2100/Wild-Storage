@@ -2,6 +2,7 @@ from DataProccessing.pixelize import Pixelize
 import json
 from collections import Counter
 from DataProccessing.c_bind import c_expandSlab, c_compressSlab
+from joblib import Parallel, delayed
 
 class FrameGenerator:
     def __init__(self, height=720, width=1280, exp=1):
@@ -40,24 +41,24 @@ class FrameGenerator:
     #     print()
     #     for i in range(0, len(c), self.width // self.exp):
     #         print(*c[i: i + self.width // self.exp])
-
+    
+    def runOnce(self, idx, slab):
+        ext_slab = self.__expandSlab(slab)
+        pix = self.p.bitToPixel(ext_slab)
+        return idx, pix
+    
     def storeFrames(self, bitdata, target_dir):
-        i = 0
         noOfBytes = len(bitdata)
         pads = self.__padSize(bitdata, noOfBytes)
         bitdata += "0" * pads
         slabs = self.__bitSlabs(bitdata, noOfBytes + pads)
-        img_arr = []
-        for slab in slabs:
-            ext_slab = self.__expandSlab(slab)
-            pix = self.p.bitToPixel(ext_slab)
-            img_arr.append(pix)
-            i += 1
+        img_arr = Parallel(n_jobs=-1)(delayed(self.runOnce)(i, slab) for i, slab in enumerate(slabs))
+        img_arr = [x[1] for x in sorted(img_arr, key=lambda x: x[0])]
         
         metadata = dict()
         metadata['bytes'] = noOfBytes
         metadata['pad_size'] = pads
-        metadata['frames'] = i
+        metadata['frames'] = len(img_arr)
         metadata['height'] = self.height
         metadata['width'] = self.width
         metadata['pixel_count'] = self.pixel_count
