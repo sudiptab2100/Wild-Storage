@@ -17,6 +17,7 @@ import os
 ENCODE = ' Encode file to video'
 DECODE = ' Decode video to file'
 CLEAN = ' Clean'
+RELOAD_TIME = ' Reload time'
 EXIT = ' Exit'
 
 def create_dir(settings):
@@ -130,6 +131,7 @@ questions = [
             ENCODE,
             DECODE,
             CLEAN,
+            RELOAD_TIME,
             EXIT
         ]
     }
@@ -142,8 +144,10 @@ cleaning_confirmation = [
     }
 ]
 
+reload_time = 0
 while True:
     # Clear console
+    time.sleep(reload_time)
     os.system('cls' if os.name=='nt' else 'clear')
     
     # WILD-STORAGE Header
@@ -170,5 +174,7 @@ while True:
         elif answer == DECODE:
             yt_url = input('Enter the YouTube video URL: ')
             download_and_decode_video(yt_url, settings)
+        elif answer == RELOAD_TIME:
+            reload_time = int(input('Enter the time in seconds: '))
     except:
         pass 

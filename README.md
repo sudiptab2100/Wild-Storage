@@ -75,6 +75,10 @@ Wait for the app to start.
 
 - Select ```Clean``` option on the app to clean data directory
 
+### Reload Time
+
+- Select ```Reload time``` option to set the time to wait before reloading the app
+
 ### Exit
 
 - Select ```Exit``` option on the app to exit
