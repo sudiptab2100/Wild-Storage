@@ -173,7 +173,8 @@ while True:
             encode_to_video(settings)
         elif answer == DECODE:
             yt_url = input('Enter the YouTube video URL: ')
-            download_and_decode_video(yt_url, settings)
+            if yt_url != '': download_and_decode_video(yt_url, settings)
+            else: decode_from_video(settings)
         elif answer == RELOAD_TIME:
             reload_time = int(input('Enter the time in seconds: '))
     except:
